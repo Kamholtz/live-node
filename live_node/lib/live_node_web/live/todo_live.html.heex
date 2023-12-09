@@ -4,14 +4,16 @@
   <br>
   <br>
 
-  <h1>
+  <h1 class="text-3xl font-bold underline">
     TODO:
   </h1>
 
   - [x] How to send cmd + return output to webpage
   <div>
     <h2>Example of using `System.cmd(...)`</h2>
-    <span>Git status: </span><span><%= @git_status %></span>
+    <span>Git status: </span>
+    <div class="bg-violet-200 rounded-md max-w-sm p-10 mb-5"><%= @git_status %></div>
+    <button phx-click="run_cmd" style="background-color:green">Run Command</button>
   </div>
   <br>
   <br>
