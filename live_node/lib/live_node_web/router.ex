@@ -17,6 +17,11 @@ defmodule LiveNodeWeb.Router do
   scope "/", LiveNodeWeb do
     pipe_through :browser
 
+    live_session :default do
+      #admin
+      live "/thermostat", ThermostatLive
+    end
+
     get "/", PageController, :home
   end
 
