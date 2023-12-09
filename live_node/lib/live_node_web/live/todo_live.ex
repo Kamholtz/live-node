@@ -16,6 +16,15 @@ defmodule LiveNodeWeb.TodoLive do
     %{prop: "value"}
   end
 
+  def example_function_component(assigns) do
+    ~H"""
+    <div style="background:blue; padding:5" >
+      <h2><%= @text %>, input_number = <%= @input_number %></h2>
+      <input type="text" value="initial text"/>
+    </div>
+    """
+  end
+
   def handle_event("inc_temperature", _params, socket) do
     {:noreply, update(socket, :temperature, &(&1 + 1))}
   end
