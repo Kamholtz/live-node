@@ -12,8 +12,13 @@
   <div>
     <h2>Example of using `System.cmd(...)`</h2>
     <span>Git status: </span>
-    <div class="bg-violet-200 rounded-md max-w-sm p-10 mb-5"><%= @git_status %></div>
-    <button phx-click="run_cmd" style="background-color:green">Run Command</button>
+
+    <button phx-click="run_cmd" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" style="background-color:green">Run Command</button>
+
+    <%= for cmd_result <- @cmd_results do %>
+      <div class="bg-violet-200 rounded-md max-w-sm p-10 mb-5"><%= cmd_result %></div>
+    <% end %>
+
   </div>
   <br>
   <br>

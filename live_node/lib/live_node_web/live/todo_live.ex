@@ -7,7 +7,7 @@ defmodule LiveNodeWeb.TodoLive do
     {:ok, 
       socket 
       |> assign(:temperature, temperature)
-      |> assign(:git_status, System.cmd("git", ["status"]) |> elem(0))
+      |> assign(:cmd_results, [System.cmd("git", ["status"]) |> elem(0)])
       |> assign(:blocks, [get_block] |> Jason.encode!)
     }
   end
@@ -18,5 +18,13 @@ defmodule LiveNodeWeb.TodoLive do
 
   def handle_event("inc_temperature", _params, socket) do
     {:noreply, update(socket, :temperature, &(&1 + 1))}
+  end
+
+  def handle_event("run_cmd", _params, socket) do
+    {:noreply, update(socket, :cmd_results, &([get_cmd_result("git", ["status"]) | &1]))}
+  end
+
+  defp get_cmd_result(cmd, args) do
+    System.cmd(cmd, args) |> elem(0)
   end
 end
