@@ -1,0 +1,31 @@
+<div>
+  Current temperature: <%= @temperature %>°F
+  <button phx-click="inc_temperature" style="background-color:green">+</button>
+  <br>
+  <br>
+
+  <h1>
+    TODO:
+  </h1>
+
+  - [x] How to send cmd + return output to webpage
+  <div>
+    <h2>Example of using `System.cmd(...)`</h2>
+    <span>Git status: </span><span><%= @git_status %></span>
+  </div>
+  <br>
+  <br>
+
+  - [ ] make a function component
+
+  - [ ] how to render a collection of `blocks` on the page with particular x,y positions
+  <div>
+    <span>blocks: </span><span><%= @blocks %></span>
+  </div>
+
+
+  - [ ] drag and drop blocks, and assign that new value to the socket
+
+  - [ ] get text from textbox into `handle_event("run_cmd")`
+
+</div>
