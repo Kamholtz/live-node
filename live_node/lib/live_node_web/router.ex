@@ -19,7 +19,7 @@ defmodule LiveNodeWeb.Router do
 
     live_session :default do
       #admin
-      live "/thermostat", ThermostatLive
+      live "/todo", TodoLive
     end
 
     get "/", PageController, :home

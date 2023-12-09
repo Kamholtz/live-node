@@ -1,4 +1,4 @@
-defmodule LiveNodeWeb.ThermostatLive do
+defmodule LiveNodeWeb.TodoLive do
   # In Phoenix v1.6+ apps, the line is typically: use LiveNodeWeb, :live_view
   use Phoenix.LiveView
 
