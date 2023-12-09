@@ -20,6 +20,7 @@ defmodule LiveNodeWeb.TodoLive do
     {:noreply, update(socket, :temperature, &(&1 + 1))}
   end
 
+
   def handle_event("run_cmd", _params, socket) do
     {:noreply, update(socket, :cmd_results, &([get_cmd_result("git", ["status"]) | &1]))}
   end
