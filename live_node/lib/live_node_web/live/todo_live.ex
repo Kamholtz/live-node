@@ -8,7 +8,7 @@ defmodule LiveNodeWeb.TodoLive do
       socket 
       |> assign(:temperature, temperature)
       |> assign(:cmd_results, [System.cmd("git", ["status"]) |> elem(0)])
-      |> assign(:blocks, [get_block] |> Jason.encode!)
+      |> assign(:blocks, [get_block()] |> Jason.encode!)
     }
   end
 
