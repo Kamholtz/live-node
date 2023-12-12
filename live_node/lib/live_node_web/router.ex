@@ -20,6 +20,7 @@ defmodule LiveNodeWeb.Router do
     live_session :default do
       #admin
       live "/todo", TodoLive
+      live "/promo", PromoLive
     end
 
     get "/", PageController, :home
