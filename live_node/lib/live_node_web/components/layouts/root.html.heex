@@ -11,6 +11,17 @@
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
   </head>
+
+  <nav>
+    <ul>
+      <li>
+        | <.link href={~p"/todo"}>todo</.link>
+        | <.link href={~p"/promo"}>promo</.link>
+        |
+      </li>
+    </ul>
+  </nav>
+
   <body class="bg-white antialiased">
     <%= @inner_content %>
   </body>
