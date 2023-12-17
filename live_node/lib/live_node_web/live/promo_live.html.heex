@@ -6,12 +6,10 @@
     id="promo-form"
     phx-change="validate"
     phx-submit="save">
-    <%= label f, :first_name %>
-    <%= text_input f, :first_name %>
-    <%= error_tag f, :first_name %>
-    <%= label f, :email %>
-    <%= text_input f, :email %>
-    <%= error_tag f, :email %>
-    <%= submit "Send Promo", phx_disable_with: "Sending promo..." %>
+
+    <.input field={f[:first_name]} type="text"/>
+    <.input field={f[:email]}/>
+
+
   </.form>
 </div>
