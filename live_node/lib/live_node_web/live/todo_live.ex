@@ -34,38 +34,9 @@ defmodule LiveNodeWeb.TodoLive do
     """
   end
 
-  def vega_lite_function_component(assigns) do
-    data = [
-      %{"category" => "A", "score" => 28},
-      %{"category" => "B", "score" => 55}
-    ]
-
-    # plot = Vl.new()
-    # |> Vl.data_from_values(data)
-    # |> Vl.Export.to_html()
-
-    # Initialize the specification, optionally with some top-level properties
-    plot = Vl.new(width: 400, height: 400)
-    # Specify data source for the graphic using one of the data_from_* functions
-    |> Vl.data_from_values(iteration: 1..100, score: 1..100)
-    # Pick a visual mark
-    |> Vl.mark(:line)
-    # Map data fields to visual properties of the mark, in this case point positions
-    |> Vl.encode_field(:x, "iteration", type: :quantitative)
-    |> Vl.encode_field(:y, "score", type: :quantitative)
-    |> Vl.Export.to_html()
-
-    ~H"""
-    <div>
-      <%= plot %>
-    </div>
-    """
-  end
-
   def handle_event("inc_temperature", _params, socket) do
     {:noreply, update(socket, :temperature, &(&1 + 1))}
   end
-
 
   def handle_event("run_cmd", _params, socket) do
     {:noreply, update(socket, :cmd_results, &([get_cmd_result("git", ["status"]) | &1]))}

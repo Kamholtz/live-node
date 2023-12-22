@@ -21,6 +21,7 @@ defmodule LiveNodeWeb.Router do
       #admin
       live "/todo", TodoLive
       live "/promo", PromoLive
+      live "/vega-lite-examples", VegaLiteExamples
     end
 
     get "/", PageController, :home
