@@ -1,6 +1,7 @@
 defmodule LiveNodeWeb.TodoLive do
   # In Phoenix v1.6+ apps, the line is typically: use LiveNodeWeb, :live_view
   use Phoenix.LiveView
+  alias VegaLite, as: Vl
 
   def mount(_params, _session, socket) do
     temperature = 70 # Let's assume a fixed temperature for now
@@ -8,8 +9,16 @@ defmodule LiveNodeWeb.TodoLive do
       socket 
       |> assign(:temperature, temperature)
       |> assign(:cmd_results, [System.cmd("git", ["status"]) |> elem(0)])
-      |> assign(:blocks, [get_block()] |> Jason.encode!)
+      |> assign(:blocks_as_json, [get_block()] |> Jason.encode!)
+      |> assign(:todos, get_todos())
     }
+  end
+
+  defp get_todos() do
+    [
+      %{title: "first",
+        status: "in-progress"}
+    ]
   end
 
   defp get_block() do
@@ -28,7 +37,6 @@ defmodule LiveNodeWeb.TodoLive do
   def handle_event("inc_temperature", _params, socket) do
     {:noreply, update(socket, :temperature, &(&1 + 1))}
   end
-
 
   def handle_event("run_cmd", _params, socket) do
     {:noreply, update(socket, :cmd_results, &([get_cmd_result("git", ["status"]) | &1]))}

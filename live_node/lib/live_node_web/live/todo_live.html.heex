@@ -32,13 +32,25 @@
   - [ ] how to render a collection of `blocks` on the page with particular x,y positions
 
   <div>
-    <span>blocks: </span><span><%= @blocks %></span>
+    <span>blocks as json: </span><span><%= @blocks_as_json %></span>
   </div>
   <br>
   <br>
 
 
   - [ ] drag and drop blocks, and assign that new value to the socket
+
+  <%= for todo <- @todos do %>
+      <simple_form>
+        <div class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-2 shadow-sm
+        focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400
+        drag-item:focus-within:ring-0 drag-item:focus-within:ring-offset-0
+        drag-ghost:bg-zinc-300 drag-ghost:border-0 drag-ghost:ring-0">
+        - [ ] <%= todo.title %>
+
+        </div>
+      </simple_form>
+  <% end %>
   <br>
   <br>
 

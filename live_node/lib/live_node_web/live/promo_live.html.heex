@@ -1,0 +1,15 @@
+<h2> Hi! </h2>
+<div>
+  <.form
+    :let={f}
+    for={@changeset}
+    id="promo-form"
+    phx-change="validate"
+    phx-submit="save">
+
+    <.input field={f[:first_name]} type="text"/>
+    <.input field={f[:email]}/>
+
+
+  </.form>
+</div>
