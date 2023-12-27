@@ -2,9 +2,10 @@ import Config
 
 # Configure your database
 config :live_node, LiveNode.Repo,
-  username: "postgres",
+  username: "postgres_dev1",
   password: "postgres",
-  hostname: "localhost",
+  hostname: "127.0.0.1", # while running on windows, using "localhost" did not seem to allow connecting to the DB
+  port: "5433",
   database: "live_node_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
