@@ -1,6 +1,12 @@
 <div>
   <h1 class="text-3xl font-bold underline">
     Add Link
+
+    <.form for={@form} phx-change="validate" phx-submit="save">
+      <.input type="text" field={@form[:username]} />
+      <.input type="email" field={@form[:email]} />
+      <button>Save</button>
+    </.form>
   </h1>
 
 </div>
