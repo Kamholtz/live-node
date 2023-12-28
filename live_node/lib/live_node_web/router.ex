@@ -22,7 +22,7 @@ defmodule LiveNodeWeb.Router do
       live "/todo", TodoLive
       live "/promo", PromoLive
       live "/vega-lite-examples", VegaLiteExamples
-      live "/add-link", AddLinkLive
+      live "/add-link", AddLink
     end
 
     get "/", PageController, :home
