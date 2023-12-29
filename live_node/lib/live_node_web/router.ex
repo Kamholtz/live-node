@@ -25,6 +25,9 @@ defmodule LiveNodeWeb.Router do
       live "/add-link", AddLink
     end
 
+    get "/link/", LinkController, :index
+    get "/link/:url", LinkController, :show
+
     get "/", PageController, :home
   end
 
