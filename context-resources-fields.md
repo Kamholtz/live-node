@@ -26,7 +26,7 @@ Template templates
 title:string
 
 ```bash
-mix phx.gen.live Notetaking Note notes title:string
+mix phx.gen.live Notetaking Template templates title:string
 ```
 
 ---
