@@ -24,12 +24,26 @@ defmodule LiveNodeWeb.NoteLive.Index do
     socket
     |> assign(:page_title, "New Note")
     |> assign(:note, %Note{})
+    |> apply_url_from_params(_params)
   end
 
   defp apply_action(socket, :index, _params) do
     socket
     |> assign(:page_title, "Listing Notes")
     |> assign(:note, nil)
+    |> apply_url_from_params(_params)
+  end
+
+  defp apply_url_from_params(socket, %{"url" => url}) do
+    # TODO: receive base 64 encoded URL, then change to regulat string
+    IO.inspect(url, label: "url received: ")
+    socket
+    |> assign(:url, url)
+  end
+
+  defp apply_url_from_params(socket, _params) do
+    socket
+    |> assign(:url, nil)
   end
 
   @impl true
