@@ -6,6 +6,8 @@ defmodule LiveNode.Notetaking.Template do
     field :title, :string
 
     timestamps(type: :utc_datetime)
+
+    has_many :notes, Note
   end
 
   @doc false
