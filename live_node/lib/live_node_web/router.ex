@@ -28,6 +28,7 @@ defmodule LiveNodeWeb.Router do
     get "/link/", LinkController, :index
     get "/link/:url", LinkController, :show
 
+    # templates
     live "/templates", TemplateLive.Index, :index
     live "/templates/new", TemplateLive.Index, :new
     live "/templates/:id/edit", TemplateLive.Index, :edit
@@ -35,6 +36,16 @@ defmodule LiveNodeWeb.Router do
     live "/templates/:id", TemplateLive.Show, :show
     live "/templates/:id/show/edit", TemplateLive.Show, :edit
 
+    # notes
+    live "/notes", NoteLive.Index, :index
+    live "/notes/new", NoteLive.Index, :new
+    live "/notes/:id/edit", NoteLive.Index, :edit
+
+    live "/notes/:id", NoteLive.Show, :show
+    live "/notes/:id/show/edit", NoteLive.Show, :edit
+
+
+    # default that came with generated project
     get "/", PageController, :home
   end
 

@@ -17,4 +17,19 @@ defmodule LiveNode.NotetakingFixtures do
 
     template
   end
+
+  @doc """
+  Generate a note.
+  """
+  def note_fixture(attrs \\ %{}) do
+    {:ok, note} =
+      attrs
+      |> Enum.into(%{
+        content: "some content",
+        title: "some title"
+      })
+      |> LiveNode.Notetaking.create_note()
+
+    note
+  end
 end
