@@ -12,6 +12,13 @@ defmodule LiveNodeWeb.NoteLive.FormComponent do
         <:subtitle>Use this form to manage note records in your database.</:subtitle>
       </.header>
 
+      <div>
+        <span>debug: mode </span> <%= @action  %>
+      </div>
+      <div>
+        <span>debug: url </span> <%= @url  %>
+      </div>
+
       <.simple_form
         for={@form}
         id="note-form"
