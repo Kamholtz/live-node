@@ -35,7 +35,7 @@ The supported types are:
 - utc_datetime_usec
 - uuid
 ```bash
-mix phx.gen.live Notetaking Note notes title:string date_created:date template_id:references:templates content:text
+mix phx.gen.live Notetaking Note notes title:string template_id:references:templates content:text
 ```
 
 ---
