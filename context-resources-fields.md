@@ -14,7 +14,26 @@ date:datetime
 text:string 
 - [ ] how long?
 
-The supported types are: array, binary, boolean, date, decimal, enum, float, integer, map, naive_datetime, naive_datetime_usec, references, string, text, time, time_usec, utc_datetime, utc_datetime_usec, uuid
+The supported types are: 
+- array
+- binary
+- boolean
+- date
+- decimal
+- enum
+- float
+- integer
+- map
+- naive_datetime
+- naive_datetime_usec
+- references
+- string
+- text
+- time
+- time_usec
+- utc_datetime
+- utc_datetime_usec
+- uuid
 ```bash
 mix phx.gen.live Notetaking Note notes title:string date_created:date template_id:references:templates content:text
 ```
