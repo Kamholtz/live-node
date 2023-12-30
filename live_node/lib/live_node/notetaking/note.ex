@@ -1,6 +1,7 @@
 defmodule LiveNode.Notetaking.Note do
   use Ecto.Schema
   import Ecto.Changeset
+  alias LiveNode.NoteTaking.Template
 
   schema "notes" do
     field :content, :string
@@ -8,6 +9,8 @@ defmodule LiveNode.Notetaking.Note do
     field :template_id, :id
 
     timestamps(type: :utc_datetime)
+
+    has_one :templates, Template
   end
 
   @doc false
