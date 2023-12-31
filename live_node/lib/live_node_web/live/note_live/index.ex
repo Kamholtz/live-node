@@ -42,7 +42,7 @@ defmodule LiveNodeWeb.NoteLive.Index do
       {:ok, u} -> socket
         |> assign(:url, u)
       {_, _} -> socket 
-        |> assign(Lurl, "")
+        |> assign(:url, "")
     end
   end
 
