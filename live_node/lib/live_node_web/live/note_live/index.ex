@@ -32,8 +32,9 @@ defmodule LiveNodeWeb.NoteLive.Index do
     decode_out = Base.url_decode64(url)
     note =
       case decode_out do
-        # wrapped in front matter fence
+        # URL decoded successfully, return it wrapped in front matter fence
         {:ok, u} -> %Note{content: ("---\r\nurl: #{u}\r\n---\r\n")}
+        # FAILURE
         {_, _} -> %Note{}
       end
 
