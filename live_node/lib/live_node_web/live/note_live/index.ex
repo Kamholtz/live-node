@@ -35,10 +35,15 @@ defmodule LiveNodeWeb.NoteLive.Index do
   end
 
   defp apply_url_from_params(socket, %{"url" => url}) do
-    # TODO: receive base 64 encoded URL, then change to regulat string
     IO.inspect(url, label: "url received: ")
-    socket
-    |> assign(:url, url)
+    decoded_url = Base.url_decode64(url)
+
+    case decoded_url do
+      {:ok, u} -> socket
+        |> assign(:url, u)
+      {_, _} -> socket 
+        |> assign(Lurl, "")
+    end
   end
 
   defp apply_url_from_params(socket, _params) do
