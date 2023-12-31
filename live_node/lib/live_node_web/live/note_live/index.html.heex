@@ -41,7 +41,7 @@
   <.live_component
     module={LiveNodeWeb.NoteLive.FormComponent}
     id={@note.id || :new}
-    url={"passingto live_component FROM index.html.heex"}
+    url={@url || "passing to live_component FROM index.html.heex"}
     title={@page_title}
     action={@live_action}
     note={@note}
