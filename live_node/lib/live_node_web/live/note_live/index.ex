@@ -22,22 +22,9 @@ defmodule LiveNodeWeb.NoteLive.Index do
 
   # TODO: what is apply action?
   defp apply_action(socket, :new, _params) do
-    # url_param =
-    #   case _params do
-    #     %{"url" => url} -> %Note{content: (url)}
-    #     _ -> %Note{}
-    #   end
-    #
-    # note =
-    #   case _params do
-    #     %{"url" => url} -> %Note{content: (url)}
-    #     _ -> %Note{}
-    #   end
-
     socket
     |> assign(:page_title, "New Note")
     |> assign_note_from_url(_params)
-    # |> assign(:note, note)
     |> apply_url_from_params(_params)
   end
 
