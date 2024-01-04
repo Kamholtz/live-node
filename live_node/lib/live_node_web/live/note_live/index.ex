@@ -103,7 +103,7 @@ defmodule LiveNodeWeb.NoteLive.Index do
     encoded = Base.url_encode64(data, opts)
     decoded = Base.url_decode64(encoded, opts)
     [data, encoded, decoded]
-end
+  end
 
 end
 
