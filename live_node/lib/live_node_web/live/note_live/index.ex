@@ -105,6 +105,12 @@ defmodule LiveNodeWeb.NoteLive.Index do
     [data, encoded, decoded]
   end
 
+  def _never() do 
+
+    LiveNodeWeb.NoteLive.Index.test_encode_decode()
+
+  end
+
 end
 
 
