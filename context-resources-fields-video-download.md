@@ -36,7 +36,7 @@ The supported types are:
 - utc_datetime_usec
 - uuid
 ```bash
-mix phx.gen.live VideoDownload Video videos title:string url:string duration_msecs:integer status:enum:in-progress:success:error
+mix phx.gen.live VideoDownload Video videos title:string url:string duration_msecs:integer status:enum:in_progress:success:error
 ```
 
 ---
