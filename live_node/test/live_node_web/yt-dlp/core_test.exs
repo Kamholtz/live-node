@@ -26,6 +26,22 @@ defmodule LiveNodeWeb.VideoLiveTest do
     assert out = ["1", "2", "3", "4"]
   end
 
+  test "update_state" do
+    out = Core.update_state("2")
+    assert(out = %{cmd_output_lines: ["2"]})
+
+    # ["1"] ++ ["2"]
+
+  end
+
+  test "update_state 2" do
+    out =
+    Core.update_state("1")
+    |> Core.update_state("2 \r3")
+
+    assert(out = %{cmd_output_lines: ["1", "2", "3"]})
+  end
+
   # test "parse output" do
   #
   #   {out, result} = {"[youtube] Extracting URL: https://www.youtube.com/watch?v=R7t7zca8SyM\n[youtube] R7t7zca8SyM: Downloading webpage\n[youtube] R7t7zca8SyM: Downloading

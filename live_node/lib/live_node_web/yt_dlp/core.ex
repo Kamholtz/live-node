@@ -19,6 +19,19 @@ defmodule LiveNodeWeb.YtDlp.Core do
     # IO.inspect(res, label: "res")
   end
 
+  def update_state(cmd_output_str) do
+    state =
+    %{cmd_output_lines: []}
+    |> update_in([:cmd_output_lines], fn lines -> lines ++ split_cmd_out_lines(cmd_output_str) end)
+    state
+  end
+
+  def update_state(state , cmd_output_str) do
+    state or %{cmd_output_lines: []}
+    |> update_in([:cmd_output_lines], fn lines -> lines ++ split_cmd_out_lines(cmd_output_str) end)
+    state
+  end
+
   def split_cmd_out_lines(cmd_output_str) do
     String.split(cmd_output_str, ["\r", "\n"], trim: true)
   end
