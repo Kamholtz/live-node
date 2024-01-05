@@ -21,12 +21,20 @@ defmodule LiveNodeWeb.NoteLive.Index do
   end
 
   # TODO: what is apply action?
-  defp apply_action(socket, :new, _params) do
+  defp apply_action(socket, :new, params) do
     socket
     |> assign(:page_title, "New Note")
-    |> assign_note_from_url(_params)
-    |> apply_url_from_params(_params)
+    |> assign_note_from_url(params)
+    |> apply_url_from_params(params)
   end
+
+  defp apply_action(socket, :index, params) do
+    socket
+    |> assign(:page_title, "Listing Notes")
+    |> assign(:note, nil)
+    |> apply_url_from_params(params)
+  end
+
 
   def assign_note_from_url(socket, %{"url" => url}) do
     decode_out = Base.url_decode64(url)
@@ -35,7 +43,7 @@ defmodule LiveNodeWeb.NoteLive.Index do
         # URL decoded successfully, return it wrapped in front matter fence
         {:ok, u} -> %Note{content: ("---\r\nurl: #{u}\r\n---\r\n")}
         # FAILURE
-        {_, _} -> %Note{}
+        _ -> %Note{}
       end
 
     socket
@@ -47,13 +55,6 @@ defmodule LiveNodeWeb.NoteLive.Index do
     |> assign(:note, %Note{})
   end
 
-  defp apply_action(socket, :index, _params) do
-    socket
-    |> assign(:page_title, "Listing Notes")
-    |> assign(:note, nil)
-    |> apply_url_from_params(_params)
-  end
-
   defp apply_url_from_params(socket, %{"url" => url}) do
     IO.inspect(url, label: "url received: ")
     decoded_url = Base.url_decode64(url)
@@ -61,7 +62,7 @@ defmodule LiveNodeWeb.NoteLive.Index do
     case decoded_url do
       {:ok, u} -> socket
         |> assign(:url, u)
-      {_, _} -> socket 
+      _ -> socket 
         |> assign(:url, "")
     end
   end
