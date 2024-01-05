@@ -1,17 +1,18 @@
 ## Context 
 
-mix phx.gen.live Notetaking
+mix phx.gen.live VideoDownload
 
 ## Resources
 
 ---
 _Represents a markdown note_
 
-Note notes 
-fkey_template:id
+Video videos 
 title:string
-date:datetime
-text:string 
+url:string 
+status:enum
+duration_msecs:int
+
 - [ ] how long?
 
 The supported types are: 
@@ -35,7 +36,7 @@ The supported types are:
 - utc_datetime_usec
 - uuid
 ```bash
-mix phx.gen.live Notetaking Note notes title:string template_id:references:templates content:text
+mix phx.gen.live VideoDownload Video videos title:string url:string status:enum duration_msecs:int
 ```
 
 ---
