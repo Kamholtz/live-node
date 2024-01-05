@@ -75,9 +75,12 @@ defmodule LiveNodeWeb.VideoLiveTest do
     cmd = "yt-dlp"
     args = [
       "https://www.youtube.com/watch?v=R7t7zca8SyM", 
+      "--simulate", 
+
+      # will note appear
       "--output",
       "formats.txt",
-      "--simulate", 
+
       "--print", 
       "formats_table",
     ]
@@ -93,24 +96,24 @@ defmodule LiveNodeWeb.VideoLiveTest do
     cmd = "yt-dlp"
     args = [
       "https://www.youtube.com/watch?v=R7t7zca8SyM", 
+      "--simulate", 
+
       "--output",
-      "video_%(title)s\\%(title)s.%(ext)s",
-      # "--simulate", 
+      "temp/video_%(title)s/%(title)s.%(ext)s",
       # "--output",
       # "description:description_%(title)s\%(title)s.%(ext)s",
       # "--output",
       # "infojson:infojson_%(title)s\%(title)s.%(ext)s",
       # "--output",
       # "link:link_%(title)s\%(title)s.%(ext)s",
+
+      # check that simple format doesn't work either?
       "--output",
       "description:output_description",
       "--output",
       "infojson:output_infojson",
       "--output",
       "link:output_link",
-
-      "--print", 
-      "formats_table",
     ]
     res = System.cmd(cmd, args) 
       # |> elem(0)
@@ -124,5 +127,5 @@ defmodule LiveNodeWeb.VideoLiveTest do
     assert false
   end
 
-
+# --print "%()j"
 end
