@@ -127,5 +127,22 @@ defmodule LiveNodeWeb.VideoLiveTest do
     assert false
   end
 
-# --print "%()j"
+
+  # NOTE: works!
+  test "system cmd yt-dlp --print-to-file json" do
+
+    cmd = "yt-dlp"
+    args = [
+      "https://www.youtube.com/watch?v=R7t7zca8SyM", 
+      "--simulate",
+      "--print-to-file", 
+      "%()j",
+      "temp/print-to-file.json"
+    ]
+    res = System.cmd(cmd, args) 
+      # |> elem(0)
+    # IO.inspect(res, label: "res")
+
+    assert true
+  end
 end
