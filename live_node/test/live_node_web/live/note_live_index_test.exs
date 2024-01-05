@@ -1,5 +1,5 @@
 defmodule LiveNodeWeb.NoteLiveTest do
-  use LiveNodeWeb.ConnCase
+  use LiveNodeWeb.ConnCase, async: true
 
   test "abc" do
     assert true

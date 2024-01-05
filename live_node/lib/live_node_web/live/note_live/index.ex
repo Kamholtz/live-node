@@ -84,22 +84,5 @@ defmodule LiveNodeWeb.NoteLive.Index do
     {:noreply, stream_delete(socket, :notes, note)}
   end
 
-# url_encode64(data, opts \\ [])View Source
-# @spec url_encode64(binary(), keyword()) :: binary()
-# Encodes a binary string into a base 64 encoded string with URL and filename safe alphabet.
-#
-# Accepts padding: false option which will omit padding from the output string.
-#
-# Examples
-# iex> Base.url_encode64(<<255, 127, 254, 252>>)
-# "_3_-_A=="
-#
-# iex> Base.url_encode64(<<255, 127, 254, 252>>, padding: false)
-# "_3_-_A"
-
-
 
 end
-
-
-# LiveNodeWeb.NoteLive.Index.test()
