@@ -97,19 +97,7 @@ defmodule LiveNodeWeb.NoteLive.Index do
 # iex> Base.url_encode64(<<255, 127, 254, 252>>, padding: false)
 # "_3_-_A"
 
-  def test_encode_decode() do
-    data = "www.abc.com"
-    opts = []
-    encoded = Base.url_encode64(data, opts)
-    decoded = Base.url_decode64(encoded, opts)
-    %{ input_url: data, encoded_url: encoded, decoded_url: decoded }
-  end
 
-  def _never() do 
-
-    LiveNodeWeb.NoteLive.Index.test_encode_decode()
-
-  end
 
 end
 
