@@ -19,7 +19,7 @@ defmodule LiveNodeWeb.NoteLiveTest do
 # iex> Base.url_encode64(<<255, 127, 254, 252>>, padding: false)
 # "_3_-_A"
  
-  test "round trip url encode/decode demo" do
+  test "round trip simple url encode/decode demo" do
     data = "www.abc.com"
     opts = []
     encoded = Base.url_encode64(data, opts)
@@ -30,5 +30,19 @@ defmodule LiveNodeWeb.NoteLiveTest do
       {:error, _} -> assert false
     end
   end
+
+  test "round trip url encode/decode demo" do
+    data = "https://www.youtube.com/watch?v=R7t7zca8SyM"
+    opts = []
+    encoded = Base.url_encode64(data, opts)
+    decoded = Base.url_decode64(encoded, opts)
+
+    case decoded do
+      {:ok, decoded_data} -> assert decoded_data = data
+      {:error, _} -> assert false
+    end
+  end
+
+
 
 end
