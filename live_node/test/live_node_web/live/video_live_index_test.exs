@@ -146,3 +146,27 @@ defmodule LiveNodeWeb.VideoLiveTest do
     assert true
   end
 end
+
+
+# NOTE: example of downloading with progress indicator
+# PS .\live-node\live_node\test\live_node_web\live> yt-dlp https://www.youtube.com/watch?v=R7t7zca8SyM
+# [youtube] Extracting URL: https://www.youtube.com/watch?v=R7t7zca8SyM
+# [youtube] R7t7zca8SyM: Downloading webpage
+# [youtube] R7t7zca8SyM: Downloading ios player API JSON
+# [youtube] R7t7zca8SyM: Downloading android player API JSON
+# [youtube] R7t7zca8SyM: Downloading m3u8 information
+# [info] R7t7zca8SyM: Downloading 1 format(s): 22
+# [download] Destination: Elixir in 100 Seconds [R7t7zca8SyM].mp4
+# [download] 100% of    4.41MiB in 00:00:01 at 3.81MiB/s
+
+# NOTE: example of file already being downloaded
+# PS .\live-node\live_node\test\live_node_web\live> yt-dlp https://www.youtube.com/watch?v=R7t7zca8SyM --print-to-file "%()j" temp/print-to-file.json
+# [youtube] Extracting URL: https://www.youtube.com/watch?v=R7t7zca8SyM
+# [youtube] R7t7zca8SyM: Downloading webpage
+# [youtube] R7t7zca8SyM: Downloading ios player API JSON
+# [youtube] R7t7zca8SyM: Downloading android player API JSON
+# [youtube] R7t7zca8SyM: Downloading m3u8 information
+# [info] R7t7zca8SyM: Downloading 1 format(s): 22
+# [info] Writing '%()j' to: temp\print-to-file.json
+# [download] Elixir in 100 Seconds [R7t7zca8SyM].mp4 has already been downloaded
+# [download] 100% of    4.41MiB
