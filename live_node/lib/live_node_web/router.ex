@@ -45,6 +45,15 @@ defmodule LiveNodeWeb.Router do
     live "/notes/:id", NoteLive.Show, :show
     live "/notes/:id/show/edit", NoteLive.Show, :edit
 
+    # video
+
+    live "/videos", VideoLive.Index, :index
+    live "/videos/new", VideoLive.Index, :new
+    live "/videos/:id/edit", VideoLive.Index, :edit
+
+    live "/videos/:id", VideoLive.Show, :show
+    live "/videos/:id/show/edit", VideoLive.Show, :edit
+
 
     # default that came with generated project
     get "/", PageController, :home
