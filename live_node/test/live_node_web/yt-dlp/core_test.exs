@@ -46,6 +46,11 @@ defmodule LiveNodeWeb.VideoLiveTest do
     assert(Core.is_download_line?("[download] aaaa"))
   end
 
+  test "get_latest_progress([])" do
+    res = Core.get_latest_progress([])
+    assert(res = 0)
+  end
+
   test "get_latest_progress" do
     res = Core.get_latest_progress(["[download] 1", "[download 2]"])
     assert(res = "[download 2]")

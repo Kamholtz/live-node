@@ -34,6 +34,19 @@ defmodule LiveNodeWeb.YtDlp.Core do
     |> Enum.filter(&is_download_line?/1)
   end
 
+  def get_latest_progress([]) do
+    # no lines, must be at 0% progress
+    0
+  end
+
+  def get_latest_progress(lines) do
+    latest_download_line = lines
+    |> Enum.filter(&is_download_line?/1)
+    |> Enum.at(-1)
+
+    0.1
+  end
+
   def get_latest_progress(lines) do
     latest_download_line = lines
     |> Enum.filter(&is_download_line?/1)
@@ -44,7 +57,7 @@ defmodule LiveNodeWeb.YtDlp.Core do
 
   def is_download_line?(line) do
     # String.match?("bar", ~r/foo/)
-    String.match?(line, ~r/[download]/)
+    String.match?(line, ~r/^[download]/)
   end
 
   def split_cmd_out_lines(cmd_output_str) do
