@@ -6,9 +6,9 @@ import Config
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
 config :live_node, LiveNode.Repo,
-  username: "postgres_dev1",
-  password: "postgres",
-  hostname: "127.0.0.1", # while running on windows, using "localhost" did not seem to allow connecting to the DB
+  username: "carl",
+  password: "kaggenloaf",
+  hostname: "10.10.0.10", # while running on windows, using "localhost" did not seem to allow connecting to the DB
   port: "5433",
   database: "live_node_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
