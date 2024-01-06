@@ -29,6 +29,24 @@ defmodule LiveNodeWeb.YtDlp.Core do
     state
   end
 
+  def update_latest_progress(%{:cmd_output_lines => lines}) do
+    download_lines = lines
+    |> Enum.filter(&is_download_line?/1)
+  end
+
+  def get_latest_progress(lines) do
+    latest_download_line = lines
+    |> Enum.filter(&is_download_line?/1)
+    |> Enum.at(-1)
+
+    latest_download_line
+  end
+
+  def is_download_line?(line) do
+    # String.match?("bar", ~r/foo/)
+    String.match?(line, ~r/[download]/)
+  end
+
   def split_cmd_out_lines(cmd_output_str) do
     String.split(cmd_output_str, ["\r", "\n"], trim: true)
   end

@@ -42,6 +42,15 @@ defmodule LiveNodeWeb.VideoLiveTest do
     assert(out = %{cmd_output_lines: ["1", "2", "3"]})
   end
 
+  test "is_download_line?" do
+    assert(Core.is_download_line?("[download] aaaa"))
+  end
+
+  test "get_latest_progress" do
+    res = Core.get_latest_progress(["[download] 1", "[download 2]"])
+    assert(res = "[download 2]")
+  end
+
   # test "parse output" do
   #
   #   {out, result} = {"[youtube] Extracting URL: https://www.youtube.com/watch?v=R7t7zca8SyM\n[youtube] R7t7zca8SyM: Downloading webpage\n[youtube] R7t7zca8SyM: Downloading
