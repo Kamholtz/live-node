@@ -27,7 +27,7 @@ defmodule LiveNodeWeb.YtDlp.Core do
   end
 
   def update_state(state , cmd_output_str) do
-    state or %{cmd_output_lines: []}
+    state || %{cmd_output_lines: []}
     |> update_in([:cmd_output_lines], fn lines -> lines ++ split_cmd_out_lines(cmd_output_str) end)
     state
   end
