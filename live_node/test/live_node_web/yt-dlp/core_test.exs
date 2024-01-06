@@ -26,7 +26,7 @@ defmodule LiveNodeWeb.VideoLiveTest do
     assert out = ["1", "2", "3", "4"]
   end
 
-  test "update_state" do
+  test "update_state/1" do
     out = Core.update_state("2")
     assert(out = %{cmd_output_lines: ["2"]})
 
@@ -34,7 +34,7 @@ defmodule LiveNodeWeb.VideoLiveTest do
 
   end
 
-  test "update_state 2" do
+  test "update_state/2" do
     out =
     Core.update_state("1")
     |> Core.update_state("2 \r3")
