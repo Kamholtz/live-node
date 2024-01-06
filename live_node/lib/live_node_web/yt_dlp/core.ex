@@ -5,6 +5,7 @@ defmodule LiveNodeWeb.YtDlp.Core do
     args = [
       url, 
 
+      # prevent downloading video
       case simulate? do
         true -> "--simulate"
         _ -> nil
@@ -15,8 +16,6 @@ defmodule LiveNodeWeb.YtDlp.Core do
       "temp/print-to-file.json"
     ]
     res = System.cmd(cmd, args) 
-      # |> elem(0)
-    # IO.inspect(res, label: "res")
   end
 
   def update_state(cmd_output_str) do
