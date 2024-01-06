@@ -3,6 +3,16 @@
 
 ## Notes
 
+
+###  Install Dependencies
+
+includes: yt-dlp
+
+```
+chmod u+x install-deps.sh && sh install-deps.sh
+```
+
+
 ### Project creation
 
 
