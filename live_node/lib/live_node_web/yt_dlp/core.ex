@@ -11,6 +11,9 @@ defmodule LiveNodeWeb.YtDlp.Core do
         _ -> nil
       end,
 
+      "--output",
+      "temp/video_%(title)s/%(title)s.%(ext)s",
+
       "--print-to-file", 
       "%()j",
       "temp/print-to-file.json"
@@ -53,6 +56,11 @@ defmodule LiveNodeWeb.YtDlp.Core do
     |> Enum.at(-1)
 
     latest_download_line
+  end
+
+  def get_progress_from_str(line) do
+    out = Regex.run(~r/\d+/, line)
+    out
   end
 
   def is_download_line?(line) do
