@@ -10,6 +10,10 @@ defmodule LiveNodeWeb.VideoLiveTest do
     args = [
       "https://www.youtube.com/watch?v=R7t7zca8SyM", 
       "--simulate",
+
+      "--output",
+      "temp/video_%(title)s/%(title)s.%(ext)s",
+
       "--print-to-file", 
       "%()j",
       "temp/print-to-file.json"
