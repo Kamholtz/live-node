@@ -57,6 +57,10 @@ defmodule LiveNodeWeb.YtDlp.Core do
     |> Enum.at(-1)
   end
 
+  def put_latest_progress(%{:latest_progress_line => nil} = state) do
+    state
+  end
+
   def put_latest_progress(%{:latest_progress_line => line} = state) do
     state
     |> Map.put(:latest_progress, get_progress_from_str(line))
