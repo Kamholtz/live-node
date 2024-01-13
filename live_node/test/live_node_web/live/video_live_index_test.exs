@@ -1,4 +1,4 @@
-defmodule LiveNodeWeb.VideoLiveTest do
+defmodule LiveNodeWeb.VideoLiveIndexTest do
   use LiveNodeWeb.ConnCase, async: true
 
     # -o, --output [TYPES:]TEMPLATE   Output filename template; see "OUTPUT

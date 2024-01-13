@@ -1,4 +1,4 @@
-defmodule LiveNodeWeb.NoteLiveTest do
+defmodule LiveNodeWeb.NoteLiveIndexTest do
   use LiveNodeWeb.ConnCase, async: true
 
   test "abc" do
