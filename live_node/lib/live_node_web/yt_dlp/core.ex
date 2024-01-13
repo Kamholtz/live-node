@@ -23,18 +23,36 @@ defmodule LiveNodeWeb.YtDlp.Core do
 
   def update_state(cmd_output_str) do
     update_state(%{cmd_output_lines: []}, cmd_output_str)
+    |> dbg
   end
 
-  def update_state(state , cmd_output_str) do
+  def update_state(state, cmd_output_str) do
     # handle initial case where state is nil
-    state || %{cmd_output_lines: []}
+    (state || %{cmd_output_lines: []})
     |> update_in([:cmd_output_lines], fn lines -> lines ++ split_cmd_out_lines(cmd_output_str) end)
-    state
+    |> put_latest_download_line
+
   end
 
-  def update_latest_progress(%{:cmd_output_lines => lines}) do
-    download_lines = lines
+  def update_latest_progress(%{:cmd_output_lines => lines} = state) do
+    # download_lines = lines
+    # |> Enum.filter(&is_download_line?/1)
+
+    state
+    |> Map.put(:latest_progress, get_latest_progress(lines))
+  end
+
+  def put_latest_download_line(%{:cmd_output_lines => lines} = state) do
+    state
+    |> Map.put(:latest_progress_line, get_latest_progress_line(lines))
+  end
+
+  def get_latest_progress_line(lines) do
+    latest_download_line = lines
     |> Enum.filter(&is_download_line?/1)
+    |> Enum.at(-1)
+
+    latest_download_line
   end
 
   def get_latest_progress([]) do
@@ -50,13 +68,6 @@ defmodule LiveNodeWeb.YtDlp.Core do
     0.1
   end
 
-  def get_latest_progress(lines) do
-    latest_download_line = lines
-    |> Enum.filter(&is_download_line?/1)
-    |> Enum.at(-1)
-
-    latest_download_line
-  end
 
   def get_progress_from_str(line) do
     out = Regex.run(~r/\d+/, line)
@@ -65,7 +76,7 @@ defmodule LiveNodeWeb.YtDlp.Core do
 
   def is_download_line?(line) do
     # String.match?("bar", ~r/foo/)
-    String.match?(line, ~r/^[download]/)
+    String.match?(line, ~r/^\[download\]/)
   end
 
   def split_cmd_out_lines(cmd_output_str) do

@@ -1,4 +1,4 @@
-defmodule LiveNodeWeb.VideoLiveTest do
+defmodule LiveNodeWeb.YtDlp.CoreTest do
   alias LiveNodeWeb.YtDlp.Core
   use LiveNodeWeb.ConnCase, async: true
 
@@ -47,7 +47,11 @@ defmodule LiveNodeWeb.VideoLiveTest do
   end
 
   test "is_download_line?" do
-    assert(Core.is_download_line?("[download] aaaa"))
+    assert(Core.is_download_line?("[download] abc"))
+  end
+
+  test "is_download_line? false due to space at beginning" do
+    assert(!Core.is_download_line?(" [download] abc"))
   end
 
   test "get_latest_progress([])" do
@@ -57,6 +61,7 @@ defmodule LiveNodeWeb.VideoLiveTest do
 
   test "get_latest_progress" do
     res = Core.get_latest_progress(["[download] 1", "[download 2]"])
+    IO.puts("BBBB")
     assert(res = "[download 2]")
   end
 
@@ -69,13 +74,12 @@ defmodule LiveNodeWeb.VideoLiveTest do
       41MiB at    2.18MiB/s ETA 00:01\r[download]   2.8% of    4.41MiB at    1.45MiB/s ETA 00:02\r[download]   5.7% of    4.41MiB at    2.23MiB/s ETA 00:01\r[down
       load]  11.3% of    4.41MiB at    3.13MiB/s ETA 00:01\r[download]  22.7% of    4.41MiB at    3.69MiB/s ETA 00:00\r[download]  45.4% of    4.41MiB at    4.22M
       iB/s ETA 00:00\r[download]  90.8% of    4.41MiB at    4.98MiB/s ETA 00:00\r[download] 100.0% of    4.41MiB at    5.04MiB/s ETA 00:00\r[download] 100% of    
-      4.41MiB in 00:00:01 at 4.37MiB/s   \n"    
+      4.41MiB in 00:00:01 at 4.37MiB/s   \n"
+
+    # Logger.warn("warning")
 
     state = Core.update_state(cmd_output_str)
-
-    IO.inspect(state, label: "state")
-
-    assert(false)
+    assert state.latest_progress_line == "[download] 100% of    "
   end
 
 
