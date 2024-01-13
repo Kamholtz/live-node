@@ -77,7 +77,6 @@ defmodule LiveNodeWeb.YtDlp.CoreTest do
       4.41MiB in 00:00:01 at 4.37MiB/s   \n"
 
     # Logger.warn("warning")
-
     state = Core.update_state(cmd_output_str)
     assert state.latest_progress_line == "[download] 100% of    "
   end
