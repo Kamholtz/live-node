@@ -83,13 +83,17 @@ defmodule LiveNodeWeb.YtDlp.CoreTest do
   end
 
 
-  test "get_progress_from_str" do
-    out = Core.get_progress_from_str("abc 123")
+  test "get_progress_from_str with decimal point" do
+    out = Core.get_progress_from_str("[download] 10.2%")
     dbg(out)
-    assert(out = [ "123" ])
+    assert(out == 10.2)
   end
 
-
+  test "get_progress_from_str no decimal point" do
+    out = Core.get_progress_from_str("[download] 10")
+    dbg(out)
+    assert(out == 10)
+  end
 
   # test "parse output" do
   #

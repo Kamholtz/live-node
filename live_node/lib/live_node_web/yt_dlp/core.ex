@@ -64,18 +64,16 @@ defmodule LiveNodeWeb.YtDlp.Core do
     latest_download_line = lines
     |> Enum.filter(&is_download_line?/1)
     |> Enum.at(-1)
-
-    0.1
   end
 
-
   def get_progress_from_str(line) do
-    out = Regex.run(~r/\d+/, line)
-    out
+    Regex.run(~r/(\d+(.\d+){0,1})/, line)
+    |> List.first
+    |> Float.parse
+    |> elem(0)
   end
 
   def is_download_line?(line) do
-    # String.match?("bar", ~r/foo/)
     String.match?(line, ~r/^\[download\]/)
   end
 
