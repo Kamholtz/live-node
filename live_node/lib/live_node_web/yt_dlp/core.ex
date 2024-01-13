@@ -41,11 +41,9 @@ defmodule LiveNodeWeb.YtDlp.Core do
   end
 
   def get_latest_progress_line(lines) do
-    latest_download_line = lines
+    lines
     |> Enum.filter(&is_download_line?/1)
     |> Enum.at(-1)
-
-    latest_download_line
   end
 
   def get_latest_progress([]) do
