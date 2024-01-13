@@ -1,7 +1,6 @@
 defmodule LiveNodeWeb.TodoLive do
   # In Phoenix v1.6+ apps, the line is typically: use LiveNodeWeb, :live_view
   use Phoenix.LiveView
-  alias VegaLite, as: Vl
 
   def mount(_params, _session, socket) do
     temperature = 70 # Let's assume a fixed temperature for now

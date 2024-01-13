@@ -3,7 +3,7 @@ defmodule LiveNodeWeb.YtDlp.Core do
   def download_url(url, %{"opts" => %{"simulate" => simulate?}}) do
     cmd = "yt-dlp"
     args = [
-      url, 
+      url,
 
       # prevent downloading video
       case simulate? do
@@ -14,11 +14,12 @@ defmodule LiveNodeWeb.YtDlp.Core do
       "--output",
       "temp/video_%(title)s/%(title)s.%(ext)s",
 
-      "--print-to-file", 
+      "--print-to-file",
       "%()j",
       "temp/print-to-file.json"
     ]
-    res = System.cmd(cmd, args) 
+    res = System.cmd(cmd, args)
+    res
   end
 
   def update_state(cmd_output_str) do
@@ -61,7 +62,7 @@ defmodule LiveNodeWeb.YtDlp.Core do
   end
 
   def get_latest_progress(lines) do
-    latest_download_line = lines
+    lines
     |> Enum.filter(&is_download_line?/1)
     |> Enum.at(-1)
   end

@@ -149,6 +149,8 @@ defmodule LiveNodeWeb.VegaLiteAggregateDemo do
 
     ]
 
+    IO.inspect(raw_data)
+
     # Enum.map(raw_data, fn x -> 
     #   %{ date: x.date, energy_produced: x.energy_produced } 
     # end)

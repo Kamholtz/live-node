@@ -61,7 +61,6 @@ defmodule LiveNodeWeb.YtDlp.CoreTest do
 
   test "get_latest_progress" do
     res = Core.get_latest_progress(["[download] 1", "[download 2]"])
-    IO.puts("BBBB")
     assert(res = "[download 2]")
   end
 

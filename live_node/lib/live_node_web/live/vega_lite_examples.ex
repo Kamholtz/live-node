@@ -10,7 +10,7 @@ defmodule LiveNodeWeb.VegaLiteExamples do
 
   # First attempt - tried to render html
   def vega_lite_function_component(assigns) do
-    data = [
+    _data = [
       %{"category" => "A", "score" => 28},
       %{"category" => "B", "score" => 55}
     ]
@@ -30,9 +30,11 @@ defmodule LiveNodeWeb.VegaLiteExamples do
     |> Vl.encode_field(:y, "score", type: :quantitative)
     |> Vl.Export.to_html()
 
+    assigns = assign(assigns, :plot, plot)
+
     ~H"""
     <div>
-      <%= plot %>
+      <%= @plot %>
     </div>
     """
   end
