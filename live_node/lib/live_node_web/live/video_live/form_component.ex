@@ -2,6 +2,7 @@ defmodule LiveNodeWeb.VideoLive.FormComponent do
   use LiveNodeWeb, :live_component
 
   alias LiveNode.VideoDownload
+  alias LiveNodeWeb.YtDlp.Core
 
   @impl true
   def render(assigns) do
@@ -78,8 +79,15 @@ defmodule LiveNodeWeb.VideoLive.FormComponent do
 
   defp save_video(socket, :new, video_params) do
     case VideoDownload.create_video(video_params) do
-      {:ok, video} ->
+      {:ok, %{:url => url} = video} ->
         notify_parent({:saved, video})
+
+        Core.download_url(url, %{opts: %{simulate: false}})
+        |> case do
+          %{latest_progress: x} when x >= 100 -> {:ok, VideoDownload.update_video(video, %{status: :success}) }
+            _ -> {:error, {:ok, VideoDownload.update_video(video, %{status: :error})}}
+        end
+        |> IO.inspect
 
         {:noreply,
          socket
@@ -89,6 +97,10 @@ defmodule LiveNodeWeb.VideoLive.FormComponent do
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}
     end
+  end
+
+  defp download_video(url) do
+    Core.download_url(url, %{opts: %{simulate: true}})
   end
 
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do
