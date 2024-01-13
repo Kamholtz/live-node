@@ -23,8 +23,8 @@ defmodule LiveNodeWeb.YtDlp.Core do
   end
 
   def update_state(cmd_output_str) do
+    # handles initial state
     update_state(%{cmd_output_lines: []}, cmd_output_str)
-    |> dbg
   end
 
   def update_state(state, cmd_output_str) do
@@ -32,15 +32,7 @@ defmodule LiveNodeWeb.YtDlp.Core do
     (state || %{cmd_output_lines: []})
     |> update_in([:cmd_output_lines], fn lines -> lines ++ split_cmd_out_lines(cmd_output_str) end)
     |> put_latest_download_line
-
-  end
-
-  def update_latest_progress(%{:cmd_output_lines => lines} = state) do
-    # download_lines = lines
-    # |> Enum.filter(&is_download_line?/1)
-
-    state
-    |> Map.put(:latest_progress, get_latest_progress(lines))
+    |> put_latest_progress
   end
 
   def put_latest_download_line(%{:cmd_output_lines => lines} = state) do
@@ -65,6 +57,11 @@ defmodule LiveNodeWeb.YtDlp.Core do
     lines
     |> Enum.filter(&is_download_line?/1)
     |> Enum.at(-1)
+  end
+
+  def put_latest_progress(%{:latest_progress_line => line} = state) do
+    state
+    |> Map.put(:latest_progress, get_progress_from_str(line))
   end
 
   def get_progress_from_str(line) do
