@@ -1,26 +1,31 @@
 defmodule LiveNodeWeb.YtDlp.Core do
 
-  def download_url(url, %{"opts" => %{"simulate" => simulate?}}) do
+  def download_url(url, %{opts: %{simulate: _simulate?}} = params) do
+    {cmd, args} = get_download_cmd(url, params)
+    {cmd_output_str, _exit_status} = System.cmd(cmd, args)
+    update_state(cmd_output_str)
+  end
+
+  def get_download_cmd(url, %{opts: %{simulate: simulate?}}) do
     cmd = "yt-dlp"
-    args = [
-      url,
-
-      # prevent downloading video
+    args = 
+      [url]
+      ++
       case simulate? do
-        true -> "--simulate"
-        _ -> nil
-      end,
-
-      "--output",
+        true -> ["--simulate"] # prevent downloading video
+        _ -> []
+      end
+      ++
+      ["--output",
       "temp/video_%(title)s/%(title)s.%(ext)s",
 
       "--print-to-file",
       "%()j",
       "temp/print-to-file.json"
     ]
-    res = System.cmd(cmd, args)
-    res
+    {cmd, args}
   end
+
 
   def update_state(cmd_output_str) do
     # handles initial state

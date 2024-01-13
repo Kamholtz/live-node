@@ -24,6 +24,30 @@ defmodule LiveNodeWeb.YtDlp.CoreTest do
     assert true
   end
 
+  test "download url with simlulate" do
+    state = Core.download_url("https://www.youtube.com/watch?v=NQ3fZtyXji0", %{opts: %{simulate: false}})
+    assert state.latest_progress == 100
+  end
+
+  test "get_download_cmd with simulate=true" do
+    url_in = "https://www.youtube.com/watch?v=NQ3fZtyXji0"
+    out = Core.get_download_cmd(url_in, %{opts: %{simulate: true}})
+
+    {cmd, [url, simulate_flag, "--output" | _]} = out
+    assert(cmd == "yt-dlp")
+    assert(url == url_in)
+    assert(simulate_flag == "--simulate")
+  end
+
+  test "get_download_cmd with simulate=false" do
+    url_in = "https://www.youtube.com/watch?v=7yZwxsG7tVs"
+    out = Core.get_download_cmd(url_in, %{opts: %{simulate: false}})
+
+    {cmd, [url, "--output" | _]} = out
+    assert(cmd == "yt-dlp")
+    assert(url == url_in)
+  end
+
   test "split_cmd_out_lines" do
     out = Core.split_cmd_out_lines("1 \r 2 \n 3 \r\n   4")
     assert out = ["1", "2", "3", "4"]
