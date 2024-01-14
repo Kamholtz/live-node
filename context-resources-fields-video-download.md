@@ -5,7 +5,7 @@ mix phx.gen.live VideoDownload
 ## Resources
 
 ---
-_Represents a markdown note_
+_Represents a url which contains a video to be downloaded_
 
 Video videos 
 title:string
