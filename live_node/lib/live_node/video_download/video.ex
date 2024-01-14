@@ -17,6 +17,6 @@ defmodule LiveNode.VideoDownload.Video do
   def changeset(video, attrs) do
     video
     |> cast(attrs, [:title, :url, :duration_msecs, :status])
-    |> validate_required([:title, :url, :duration_msecs, :status])
+    |> validate_required([:url]) # user can set a title, and have it override what's extracted
   end
 end
