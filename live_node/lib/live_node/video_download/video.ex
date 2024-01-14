@@ -7,6 +7,7 @@ defmodule LiveNode.VideoDownload.Video do
     field :status, Ecto.Enum, values: [:in_progress, :success, :error]
     field :title, :string
     field :url, :string
+    field :content_type, :string
 
     timestamps(type: :utc_datetime)
   end
