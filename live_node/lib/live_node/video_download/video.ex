@@ -8,6 +8,7 @@ defmodule LiveNode.VideoDownload.Video do
     field :title, :string
     field :url, :string
     field :content_type, :string
+    field :video_file, :any, virtual: true
 
     timestamps(type: :utc_datetime)
   end
