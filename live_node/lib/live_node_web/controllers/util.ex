@@ -1,6 +1,6 @@
 defmodule LiveNodeWeb.Util do
   def build_video_path(video) do
-    Application.get_env(:phoenix_video_stream, :uploads_dir) |> Path.join(video.path)
+    Application.get_env(:live_node, :uploads_dir) |> Path.join(video.path)
   end
 
 
@@ -21,13 +21,13 @@ defmodule LiveNodeWeb.Util do
 
   # NOTE: Confirmed send_video belongs here
   def send_video(conn, _headers, video) do
-    video_path = build_video_path(video)
-    out = conn
+    # BUG: not ready
+    # video_path = build_video_path(video)
 
     # TODO: remove hardcoded content-type
+    out = conn
     |> Plug.Conn.put_resp_header("content-type", "video/mp4")
     |> Plug.Conn.send_file(200, "/home/carlk/repos/live-node/live_node/temp/video_Elixir in 100 Seconds/Elixir in 100 Seconds.mp4")
-
     out
   end
 end
