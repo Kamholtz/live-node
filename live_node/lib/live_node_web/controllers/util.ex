@@ -21,13 +21,15 @@ defmodule LiveNodeWeb.Util do
 
   # NOTE: Confirmed send_video belongs here
   def send_video(conn, _headers, video) do
-    # BUG: not ready
-    # video_path = build_video_path(video)
+    video_path =
+    video
+      |> Map.put(:path, "video_Elixir in 100 Seconds/Elixir in 100 Seconds.mp4")
+      |> build_video_path()
 
     # TODO: remove hardcoded content-type
     out = conn
     |> Plug.Conn.put_resp_header("content-type", "video/mp4")
-    |> Plug.Conn.send_file(200, "./temp/video_Elixir in 100 Seconds/Elixir in 100 Seconds.mp4")
+    |> Plug.Conn.send_file(200, video_path)
     out
   end
 end
