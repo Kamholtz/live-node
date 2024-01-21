@@ -27,7 +27,7 @@ defmodule LiveNodeWeb.Util do
     # TODO: remove hardcoded content-type
     out = conn
     |> Plug.Conn.put_resp_header("content-type", "video/mp4")
-    |> Plug.Conn.send_file(200, "/home/carlk/repos/live-node/live_node/temp/video_Elixir in 100 Seconds/Elixir in 100 Seconds.mp4")
+    |> Plug.Conn.send_file(200, "./temp/video_Elixir in 100 Seconds/Elixir in 100 Seconds.mp4")
     out
   end
 end
