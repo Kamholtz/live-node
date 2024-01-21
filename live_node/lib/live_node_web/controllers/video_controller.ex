@@ -1,4 +1,5 @@
-defmodule LiveNodeWeb.Controllers.VideoController do
+defmodule LiveNodeWeb.VideoController do
+  import LiveNodeWeb.Util, only: [build_video_path: 1]
 
   # def create(conn, %{"video" => video_params}) do
   #   changeset = Video.changeset(%Video{}, video_params)
