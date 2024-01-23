@@ -55,8 +55,10 @@ defmodule LiveNodeWeb.Router do
     live "/videos/:id/show/edit", VideoLive.Show, :edit
 
 
+    get "/watch/:id", WatchController, :show
     # default that came with generated project
     get "/", PageController, :home
+    resources "/videos", VideoController
   end
 
   # Other scopes may use custom stacks.
