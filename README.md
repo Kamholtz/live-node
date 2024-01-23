@@ -1,6 +1,6 @@
 # LiveNode
 
-Work-in-progress, experimenting with Elixir
+Work-in-progress, experimenting with Elixir and trying out project ideas
 
 ## Notes
 
