@@ -31,6 +31,7 @@ defmodule LiveNodeWeb.VideoLive.FormComponent do
           options={Ecto.Enum.values(LiveNode.VideoDownload.Video, :status)}
         />
         <.input field={@form[:content_type]} type="text" label="Content type" />
+        <.input field={@form[:video_path]} type="text" label="Video path" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Video</.button>
         </:actions>

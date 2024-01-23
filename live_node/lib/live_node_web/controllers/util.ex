@@ -28,7 +28,7 @@ defmodule LiveNodeWeb.Util do
 
     # TODO: remove hardcoded content-type
     out = conn
-    |> Plug.Conn.put_resp_header("content-type", "video/mp4")
+    |> Plug.Conn.put_resp_header("content-type", video.content_type)
     |> Plug.Conn.send_file(200, video_path)
     out
   end
