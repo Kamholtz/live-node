@@ -1,5 +1,6 @@
 # LiveNode
 
+Work-in-progress, experimenting with Elixir
 
 ## Notes
 
