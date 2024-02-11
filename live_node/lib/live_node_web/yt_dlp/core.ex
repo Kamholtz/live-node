@@ -2,9 +2,8 @@ defmodule LiveNodeWeb.YtDlp.Core do
 
   def download_url(url, %{opts: %{simulate: _simulate?}} = params) do
     {cmd, args} = get_download_cmd(url, params)
-    dbg(__ENV__.function)
+    # dbg(__ENV__.function)
     {cmd_output_str, _exit_status} = System.cmd(cmd, args)
-    IO.inspect({cmd_output_str, _exit_status}, label: "cmd_output_str + exit status")
     update_state(cmd_output_str)
   end
 
@@ -65,6 +64,7 @@ defmodule LiveNodeWeb.YtDlp.Core do
     |> put_latest_progress
     |> put_destination_line
     |> put_destination
+    |> put_destination_dir
   end
 
 
@@ -87,7 +87,7 @@ defmodule LiveNodeWeb.YtDlp.Core do
     |> Enum.at(-1)
   end
 
-    # no lines, must be at 0% progress
+  # no lines, must be at 0% progress
   def get_latest_progress([]), do: 0
   # typical case
   def get_latest_progress(lines) do
@@ -140,6 +140,13 @@ defmodule LiveNodeWeb.YtDlp.Core do
   def get_destination_from_str(line) do
     out = Regex.run(~r/\[download\] Destination: (.*?)$/, line)
     |> Enum.at(1)
+  end
+
+  # destination dir
+  def put_destination_dir(%{:destination => nil} = state), do: state
+  def put_destination_dir(%{:destination => destination} = state) do
+    state
+    |> Map.put(:destination_dir, Path.dirname(destination))
   end
 
 # {"[youtube] Extracting URL: https://www.youtube.com/watch?v=R7t7zca8SyM\n[youtube] R7t7zca8SyM: Downloading webpage\n[youtube] R7t7zca8SyM: Downloading
