@@ -37,6 +37,20 @@ defmodule LiveNodeWeb.YtDlp.Core do
     {cmd, args}
   end
 
+  def get_json(filename) do
+    with {:ok, body} <- File.read(filename),
+         {:ok, json} <- Jason.decode(body), do: {:ok, json}
+  end
+
+  def get_title_from_log(print_to_file) do
+    print_to_file
+    |> Map.get("title")
+  end
+
+  def get_title_from_log(print_to_file) do
+    print_to_file
+    |> Map.get("title")
+  end
 
   def update_state(cmd_output_str) do
     # handles initial state

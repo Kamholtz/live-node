@@ -112,4 +112,21 @@ defmodule LiveNodeWeb.YtDlp.CoreTest do
     assert(out == 10)
   end
 
+  test "download url with simlulate julia video" do
+    state = Core.download_url("https://www.youtube.com/watch?v=JYs_94znYy0&ab_channel=Fireship", %{opts: %{simulate: false}})
+    assert state.latest_progress == 100
+  end
+
+  # JSON + reading output file
+  test "get_jason error on file that does not exist" do
+    {status, out} = Core.get_json("xxx")
+    assert(status == :error)
+  end
+
+  test "get_jason decodes file with correct value" do
+    {status, out} = Core.get_json("test/live_node_web/yt-dlp/test_json_file.json")
+    assert(status == :ok)
+    assert(out |> Map.get("jsonProperty") == "jsonValue")
+  end
+
 end
