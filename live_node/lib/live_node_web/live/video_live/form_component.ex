@@ -86,7 +86,7 @@ defmodule LiveNodeWeb.VideoLive.FormComponent do
 
         Core.download_url(url, %{opts: %{simulate: false}})
         |> case do
-          %{latest_progress: x} when x >= 100 -> {:ok, VideoDownload.update_video(video, %{status: :success}) }
+          %{latest_progress: x, destination: video_path} when x >= 100 -> {:ok, VideoDownload.update_video(video, %{status: :success, video_path: video_path})}
             _ -> {:error, {:ok, VideoDownload.update_video(video, %{status: :error})}}
         end
         |> IO.inspect
