@@ -111,6 +111,15 @@ defmodule LiveNodeWeb.YtDlp.Core do
     String.split(cmd_output_str, ["\r", "\n"], trim: true)
   end
 
+  def is_destination_line?(line) do
+    String.match?(line, ~r/^\[download\] Destination: /)
+  end
+
+  def get_destination_from_str(line) do
+    out = Regex.run(~r/\[download\] Destination: (.*?)\n\r/, line)
+    |> Enum.at(1)
+  end
+
 # {"[youtube] Extracting URL: https://www.youtube.com/watch?v=R7t7zca8SyM\n[youtube] R7t7zca8SyM: Downloading webpage\n[youtube] R7t7zca8SyM: Downloading
 #  ios player API JSON\n[youtube] R7t7zca8SyM: Downloading android player API JSON\n[youtube] R7t7zca8SyM: Downloading m3u8 information\n[info] R7t7zca8SyM: D
 # ownloading 1 format(s): 22\n[info] Writing '%()j' to: temp\\print-to-file.json\n[download] Destination: Elixir in 100 Seconds [R7t7zca8SyM].mp4\n\r[download

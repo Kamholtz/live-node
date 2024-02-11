@@ -1,5 +1,6 @@
 defmodule LiveNodeWeb.YtDlp.CoreTest do
   alias LiveNodeWeb.YtDlp.Core
+  require Logger
   use LiveNodeWeb.ConnCase, async: true
 
   # NOTE: works!
@@ -112,8 +113,9 @@ defmodule LiveNodeWeb.YtDlp.CoreTest do
     assert(out == 10)
   end
 
-  test "download url with simlulate julia video" do
+  test "download_url - julia video" do
     state = Core.download_url("https://www.youtube.com/watch?v=JYs_94znYy0&ab_channel=Fireship", %{opts: %{simulate: false}})
+    Logger.debug(state)
     assert state.latest_progress == 100
   end
 
@@ -127,6 +129,36 @@ defmodule LiveNodeWeb.YtDlp.CoreTest do
     {status, out} = Core.get_json("test/live_node_web/yt-dlp/test_json_file.json")
     assert(status == :ok)
     assert(out |> Map.get("jsonProperty") == "jsonValue")
+  end
+
+  test "is_destination_line?" do
+    line = "[download] Destination: temp/video_Julia_in_100_Seconds/Julia_in_100_Seconds.mp4\n\r"
+    out = Core.is_destination_line?(line)
+    assert(out == true)
+  end
+
+  test "is_destination_line? - false" do
+    line = "[download] abc: something_else\n\r"
+    out = Core.is_destination_line?(line)
+    assert(out == false)
+  end
+
+  test "get_destination_from_str" do
+    line = "[download] Destination: temp/video_Julia_in_100_Seconds/Julia_in_100_Seconds.mp4\n\r"
+    out = Core.get_destination_from_str(line)
+    assert(out == "temp/video_Julia_in_100_Seconds/Julia_in_100_Seconds.mp4")
+  end
+
+  test "extract download location" do
+    cmd_output_str = "[youtube] Extracting URL: https://www.youtube.com/watch?v=JYs_94znYy0&ab_channel=Fireship\n[youtube] JYs_94znYy0: Downloading webpage\n[youtube] JYs_94znYy0: Downloading ios player API JSON\n[youtube] JYs_94znYy0: Downloading android player API JSON\n[youtube] JYs_94znYy0: Downloading m3u8 information\n[info] JYs_94znYy0: Downloading 1 format(s): 22\n[info] Writing '%()j' to: temp/video_Julia_in_100_Seconds/print-to-file.json\n[download] Destination: temp/video_Julia_in_100_Seconds/Julia_in_100_Seconds.mp4\n\r[download]   0.0% of    5.37MiB at  597.91KiB/s ETA 00:09\r[download]   0.1% of    5.37MiB at    1.09MiB/s ETA 00:04\r[download]   0.1% of    5.37MiB at    2.32MiB/s ETA 00:02\r[download]   0.3% of    5.37MiB at    4.56MiB/s ETA 00:01\r[download]   0.6% of    5.37MiB at    1.99MiB/s ETA 00:02\r[download]   1.1% of    5.37MiB at    2.94MiB/s ETA 00:01\r[download]   2.3% of    5.37MiB at  791.95KiB/s ETA 00:06\r[download]   4.6% of    5.37MiB at    1.38MiB/s ETA 00:03\r[download]   9.3% of    5.37MiB at    2.20MiB/s ETA 00:02\r[download]  18.6% of    5.37MiB at    2.94MiB/s ETA 00:01\r[download]  37.2% of    5.37MiB at    3.90MiB/s ETA 00:00\r[download]  74.5% of    5.37MiB at    4.59MiB/s ETA 00:00\r[download] 100.0% of    5.37MiB at    4.93MiB/s ETA 00:00\r[download] 100% of    5.37MiB in 00:00:01 at 3.93MiB/s   \n"
+    state = Core.update_state(cmd_output_str)
+    Logger.debug(state)
+    assert(state == "")
+  end
+
+  test "already downloaded" do
+  cmd_output_str = "[youtube] Extracting URL: https://www.youtube.com/watch?v=JYs_94znYy0&ab_channel=Fireship\n[youtube] JYs_94znYy0: Downloading webpage\n[youtube] JYs_94znYy0: Downloading ios player API JSON\n[youtube] JYs_94znYy0: Downloading android player API JSON\n[youtube] JYs_94znYy0: Downloading m3u8 information\n[info] JYs_94znYy0: Downloading 1 format(s): 22\n[info] Writing '%()j' to: temp/video_Julia_in_100_Seconds/print-to-file.json\n[download] temp/video_Julia_in_100_Seconds/Julia_in_100_Seconds.mp4 has already been downloaded\n\r[download] 100% of    5.37MiB\n"
+
   end
 
 end
