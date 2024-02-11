@@ -1,4 +1,3 @@
-
 defmodule LiveNodeWeb.Jq.Core do
 
   def get_jq_cmd(%{opts: %{filter: jq_filter, path: path}}) do
@@ -43,6 +42,5 @@ defmodule LiveNodeWeb.Jq.Core do
 
     {"sh", ["-c", command]}
   end
-
 end
 
