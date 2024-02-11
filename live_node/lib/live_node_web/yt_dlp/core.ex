@@ -63,6 +63,8 @@ defmodule LiveNodeWeb.YtDlp.Core do
     |> update_in([:cmd_output_lines], fn lines -> lines ++ split_cmd_out_lines(cmd_output_str) end)
     |> put_latest_download_line
     |> put_latest_progress
+    |> put_destination_line
+    |> put_destination
   end
 
   def put_latest_download_line(%{:cmd_output_lines => lines} = state) do
@@ -111,12 +113,35 @@ defmodule LiveNodeWeb.YtDlp.Core do
     String.split(cmd_output_str, ["\r", "\n"], trim: true)
   end
 
+
+  # Destination of download
+
+  def put_destination_line(%{:cmd_output_lines => lines} = state) do
+    state
+    |> Map.put(:destination_line, get_destination_line(lines))
+  end
+
+  def get_destination_line(lines) do
+    lines
+    |> Enum.filter(&is_destination_line?/1)
+    |> Enum.at(-1)
+  end
+
+  def put_destination(%{:destination_line => nil} = state) do
+    state
+  end
+
+  def put_destination(%{:destination_line => line} = state) do
+    state
+    |> Map.put(:destination, get_destination_from_str(line))
+  end
+
   def is_destination_line?(line) do
     String.match?(line, ~r/^\[download\] Destination: /)
   end
 
   def get_destination_from_str(line) do
-    out = Regex.run(~r/\[download\] Destination: (.*?)\n\r/, line)
+    out = Regex.run(~r/\[download\] Destination: (.*?)$/, line)
     |> Enum.at(1)
   end
 
