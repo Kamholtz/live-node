@@ -119,8 +119,10 @@ defmodule LiveNodeWeb.YtDlp.Core do
   # Destination of download
 
   def put_destination_line(%{:cmd_output_lines => lines} = state) do
-    state
-    |> Map.put(:destination_line, get_destination_line(lines))
+    case get_destination_line(lines) do
+      nil -> state
+      destination_line -> Map.put(state, :destination_line, destination_line)
+    end
   end
 
   def get_destination_line(lines) do
@@ -162,9 +164,12 @@ defmodule LiveNodeWeb.YtDlp.Core do
     String.match?(line, ~r/^\[download\] .*? has already been downloaded$/)
   end
 
+  def put_already_downloaded_destination(%{:already_downloaded_line => nil} = state), do: state
   def put_already_downloaded_destination(%{:already_downloaded_line => line} = state) do
-    state
-    |> Map.put(:destination, get_already_downloaded_destination(line))
+    case get_already_downloaded_destination(line) do
+      nil -> state
+      destination -> Map.put(state, :destination, destination)
+    end
   end
   def put_already_downloaded_destination(state), do: state
 
