@@ -23,7 +23,7 @@ defmodule LiveNodeWeb.Util do
   def send_video(conn, _headers, video) do
     video_path =
     video
-      |> Map.put(:path, "video_Elixir in 100 Seconds/Elixir in 100 Seconds.mp4")
+      |> Map.put(:path, video.video_path || "video_Elixir in 100 Seconds/Elixir in 100 Seconds.mp4")
       |> build_video_path()
 
     # TODO: remove hardcoded content-type
