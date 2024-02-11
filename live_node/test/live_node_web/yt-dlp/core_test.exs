@@ -183,7 +183,7 @@ defmodule LiveNodeWeb.YtDlp.CoreTest do
   end
 
   test "already downloaded" do
-  cmd_output_str = "[youtube] Extracting URL: https://www.youtube.com/watch?v=JYs_94znYy0&ab_channel=Fireship\n[youtube] JYs_94znYy0: Downloading webpage\n[youtube] JYs_94znYy0: Downloading ios player API JSON\n[youtube] JYs_94znYy0: Downloading android player API JSON\n[youtube] JYs_94znYy0: Downloading m3u8 information\n[info] JYs_94znYy0: Downloading 1 format(s): 22\n[info] Writing '%()j' to: temp/video_Julia_in_100_Seconds/print-to-file.json\n[download] temp/video_Julia_in_100_Seconds/Julia_in_100_Seconds.mp4 has already been downloaded\n\r[download] 100% of    5.37MiB\n"
+    cmd_output_str = "[youtube] Extracting URL: https://www.youtube.com/watch?v=JYs_94znYy0&ab_channel=Fireship\n[youtube] JYs_94znYy0: Downloading webpage\n[youtube] JYs_94znYy0: Downloading ios player API JSON\n[youtube] JYs_94znYy0: Downloading android player API JSON\n[youtube] JYs_94znYy0: Downloading m3u8 information\n[info] JYs_94znYy0: Downloading 1 format(s): 22\n[info] Writing '%()j' to: temp/video_Julia_in_100_Seconds/print-to-file.json\n[download] temp/video_Julia_in_100_Seconds/Julia_in_100_Seconds.mp4 has already been downloaded\n\r[download] 100% of    5.37MiB\n"
 
     state = Core.update_state(cmd_output_str)
     assert(state.destination == "temp/video_Julia_in_100_Seconds/Julia_in_100_Seconds.mp4")

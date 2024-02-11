@@ -135,6 +135,8 @@ defmodule LiveNodeWeb.YtDlp.Core do
     String.match?(line, ~r/^\[download\] Destination: /)
   end
 
+  # TODO: try using patterns/guards
+  # https://hexdocs.pm/elixir/main/patterns-and-guards.html
   def put_destination(%{:destination_line => nil} = state), do: state
   def put_destination(%{:destination_line => line} = state) do
     state
