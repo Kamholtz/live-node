@@ -2,7 +2,9 @@ defmodule LiveNodeWeb.YtDlp.Core do
 
   def download_url(url, %{opts: %{simulate: _simulate?}} = params) do
     {cmd, args} = get_download_cmd(url, params)
+    dbg(__ENV__.function)
     {cmd_output_str, _exit_status} = System.cmd(cmd, args)
+    IO.inspect({cmd_output_str, _exit_status}, label: "cmd_output_str + exit status")
     update_state(cmd_output_str)
   end
 
@@ -19,9 +21,18 @@ defmodule LiveNodeWeb.YtDlp.Core do
       ["--output",
       "temp/video_%(title)s/%(title)s.%(ext)s",
 
+# --print-to-file [WHEN:]TEMPLATE FILE
+#                                 Append given template to the file. The
+#                                 values of WHEN and TEMPLATE are same as that
+#                                 of --print. FILE uses the same syntax as the
+#                                 output template. This option can be used
+#                                 multiple times
+
       "--print-to-file",
       "%()j",
-      "temp/print-to-file.json"
+      "temp/video_%(title)s/print-to-file.json",
+
+      "--restrict-filenames"
     ]
     {cmd, args}
   end
