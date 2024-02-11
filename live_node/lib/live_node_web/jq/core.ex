@@ -36,8 +36,7 @@ defmodule LiveNodeWeb.Jq.Core do
   def get_format_jq_cmd(path_in, path_out) do
     command =
       case :os.type() do
-        :unix -> "jq '.' " <> path_in <>" > " <> path_out
-        {:unix, :linux} -> "jq '.' " <> path_in <>" > " <> path_out
+        {:unix, _} -> "jq '.' " <> path_in <>" > " <> path_out
         :win32 -> "jq \".\" " <> path_in <>" > " <> path_out
         _ -> raise "Unsupported operating system"
       end
