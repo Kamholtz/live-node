@@ -14,6 +14,7 @@ defmodule LiveNodeWeb.Jq.CoreTest do
 
   test "get_format_jq_cmd" do
     out = Core.get_format_jq_cmd("in.json", "out.json")
+    assert(out == {"sh", ["-c", "jq '.' in.json > out.json"]})
   end
 
   test "format_json" do
