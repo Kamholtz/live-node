@@ -86,7 +86,12 @@ defmodule LiveNodeWeb.VideoLive.FormComponent do
 
         Core.download_url(url, %{opts: %{simulate: false}})
         |> case do
-          %{latest_progress: x, destination: video_path} when x >= 100 -> {:ok, VideoDownload.update_video(video, %{status: :success, video_path: video_path})}
+          # Update status and set video path
+          %{latest_progress: x, destination: video_path} when x >= 100 ->
+            {:ok,
+              # TODO: remove hardcoded content_type and replace with the content type based on extension of the print-to-file.json
+              VideoDownload.update_video(video, %{status: :success, video_path: Path.relative_to(video_path, "temp"), content_type: "video/mp4"})}
+
             _ -> {:error, {:ok, VideoDownload.update_video(video, %{status: :error})}}
         end
         |> IO.inspect
@@ -99,6 +104,13 @@ defmodule LiveNodeWeb.VideoLive.FormComponent do
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}
     end
+  end
+
+  def put_relative_video_path(video_attrs, %{destination_dir: nil} = video_download_state), do: video_attrs
+  def put_relative_video_path(video_attrs, %{destination_dir: destination_dir} = video_download_state) do
+    rel_path = Path.relative_to(destination_dir, "temp")
+    video_attrs
+    |> Map.put(:video_path, destination_dir)
   end
 
   defp download_video(url) do
