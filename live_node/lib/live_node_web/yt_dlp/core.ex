@@ -65,6 +65,8 @@ defmodule LiveNodeWeb.YtDlp.Core do
     |> put_destination_line
     |> put_destination
     |> put_destination_dir
+    |> put_already_downloaded_destination_line
+    |> put_already_downloaded_destination
   end
 
 
@@ -96,11 +98,11 @@ defmodule LiveNodeWeb.YtDlp.Core do
     |> Enum.at(-1)
   end
 
-  def put_latest_progress(%{:latest_progress_line => nil} = state), do: state
   def put_latest_progress(%{:latest_progress_line => line} = state) do
     state
     |> Map.put(:latest_progress, get_progress_from_str(line))
   end
+  def put_latest_progress(state), do: state
 
   def get_progress_from_str(line) do
     Regex.run(~r/(\d+(.\d+){0,1})/, line)
@@ -127,27 +129,58 @@ defmodule LiveNodeWeb.YtDlp.Core do
     |> Enum.at(-1)
   end
 
+  def is_destination_line?(line) do
+    String.match?(line, ~r/^\[download\] Destination: /)
+  end
+
   def put_destination(%{:destination_line => nil} = state), do: state
   def put_destination(%{:destination_line => line} = state) do
     state
     |> Map.put(:destination, get_destination_from_str(line))
   end
-
-  def is_destination_line?(line) do
-    String.match?(line, ~r/^\[download\] Destination: /)
-  end
+  def put_destination(state), do: state
 
   def get_destination_from_str(line) do
-    out = Regex.run(~r/\[download\] Destination: (.*?)$/, line)
+    Regex.run(~r/\[download\] Destination: (.*?)$/, line)
+    |> Enum.at(1)
+  end
+
+  # destination (already downloaded)
+
+  def put_already_downloaded_destination_line(%{:cmd_output_lines => lines} = state) do
+    state
+    |> Map.put(:already_downloaded_line, get_already_downloaded_line(lines))
+  end
+
+  def get_already_downloaded_line(lines) do
+    lines
+    |> Enum.filter(&is_already_downloaded_line?/1)
+    |> Enum.at(-1)
+  end
+
+  def is_already_downloaded_line?(line) do
+    String.match?(line, ~r/^\[download\] .*? has already been downloaded$/)
+  end
+
+  def put_already_downloaded_destination(%{:already_downloaded_line => line} = state) do
+    state
+    |> Map.put(:destination, get_already_downloaded_destination(line))
+  end
+  def put_already_downloaded_destination(state), do: state
+
+  def get_already_downloaded_destination(line) do
+    Regex.run(~r/\[download\] (.*?) has already been downloaded$/, line)
     |> Enum.at(1)
   end
 
   # destination dir
+
   def put_destination_dir(%{:destination => nil} = state), do: state
   def put_destination_dir(%{:destination => destination} = state) do
     state
     |> Map.put(:destination_dir, Path.dirname(destination))
   end
+  def put_destination_dir(state), do: state
 
 # {"[youtube] Extracting URL: https://www.youtube.com/watch?v=R7t7zca8SyM\n[youtube] R7t7zca8SyM: Downloading webpage\n[youtube] R7t7zca8SyM: Downloading
 #  ios player API JSON\n[youtube] R7t7zca8SyM: Downloading android player API JSON\n[youtube] R7t7zca8SyM: Downloading m3u8 information\n[info] R7t7zca8SyM: D

@@ -153,6 +153,23 @@ defmodule LiveNodeWeb.YtDlp.CoreTest do
     path = "temp/video_Julia_in_100_Seconds/Julia_in_100_Seconds.mp4"
     out = Path.dirname(path)
     assert(out == "temp/video_Julia_in_100_Seconds")
+
+    out2 = Path.relative_to(out, "temp")
+    assert(out2 == "video_Julia_in_100_Seconds")
+  end
+
+
+  test "has already been downloaded" do
+    line = "[download] temp/video_Julia_in_100_Seconds/Julia_in_100_Seconds.mp4 has already been downloaded"
+
+    Core.is_already_downloaded_line?(line)
+    |> assert
+  end
+
+  test "get_already_downloaded_destination" do
+    line = "[download] temp/video_Julia_in_100_Seconds/Julia_in_100_Seconds.mp4 has already been downloaded"
+    out = Core.get_already_downloaded_destination(line)
+    assert(out == "temp/video_Julia_in_100_Seconds/Julia_in_100_Seconds.mp4")
   end
 
   test "extract download location" do
@@ -168,6 +185,20 @@ defmodule LiveNodeWeb.YtDlp.CoreTest do
   test "already downloaded" do
   cmd_output_str = "[youtube] Extracting URL: https://www.youtube.com/watch?v=JYs_94znYy0&ab_channel=Fireship\n[youtube] JYs_94znYy0: Downloading webpage\n[youtube] JYs_94znYy0: Downloading ios player API JSON\n[youtube] JYs_94znYy0: Downloading android player API JSON\n[youtube] JYs_94znYy0: Downloading m3u8 information\n[info] JYs_94znYy0: Downloading 1 format(s): 22\n[info] Writing '%()j' to: temp/video_Julia_in_100_Seconds/print-to-file.json\n[download] temp/video_Julia_in_100_Seconds/Julia_in_100_Seconds.mp4 has already been downloaded\n\r[download] 100% of    5.37MiB\n"
 
+    state = Core.update_state(cmd_output_str)
+    assert(state.destination == "temp/video_Julia_in_100_Seconds/Julia_in_100_Seconds.mp4")
+  end
+
+  def a(%{:a => a}) do
+    :error
+  end
+
+  def a(map_without_a) do
+    :ok
+  end
+
+  test "a" do
+    assert(a(%{}) == :ok)
   end
 
 end
