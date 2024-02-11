@@ -67,6 +67,15 @@ defmodule LiveNodeWeb.YtDlp.Core do
     |> put_destination
   end
 
+
+  # split
+
+  def split_cmd_out_lines(cmd_output_str) do
+    String.split(cmd_output_str, ["\r", "\n"], trim: true)
+  end
+
+  # download progress
+
   def put_latest_download_line(%{:cmd_output_lines => lines} = state) do
     state
     |> Map.put(:latest_progress_line, get_latest_progress_line(lines))
@@ -78,11 +87,9 @@ defmodule LiveNodeWeb.YtDlp.Core do
     |> Enum.at(-1)
   end
 
-  def get_latest_progress([]) do
     # no lines, must be at 0% progress
-    0
-  end
-
+  def get_latest_progress([]), do: 0
+  # typical case
   def get_latest_progress(lines) do
     lines
     |> Enum.filter(&is_download_line?/1)
@@ -104,10 +111,6 @@ defmodule LiveNodeWeb.YtDlp.Core do
 
   def is_download_line?(line) do
     String.match?(line, ~r/^\[download\]/)
-  end
-
-  def split_cmd_out_lines(cmd_output_str) do
-    String.split(cmd_output_str, ["\r", "\n"], trim: true)
   end
 
 
